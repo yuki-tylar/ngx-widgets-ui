@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
-import { UiComponent } from './ui.component';
-
+import { CommonModule } from '@angular/common'; 
+import { ButtonComponent } from './button/button.component';
+import { IconModule } from '@takayuki-h/ngx-icons';
 
 
 @NgModule({
-  declarations: [UiComponent],
+  declarations: [ButtonComponent],
   imports: [
+    CommonModule,
+    IconModule
   ],
-  exports: [UiComponent]
+  exports: [ButtonComponent]
 })
 export class UiModule { }

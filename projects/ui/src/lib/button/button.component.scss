@@ -1,0 +1,46 @@
+@import "../assets/color";
+
+:host{
+  font-size: 14px;
+  color: inherit;
+}
+
+button{
+  appearance: none;
+  background: none;
+  outline: none;
+  border: none;
+  font-size: 1em;
+  color: inherit;
+}
+
+/** round class */
+button{
+  border: solid 1px transparent;
+
+  &.rounded-pill{ border-radius: 100px; }
+  &.rounded{ border-radius: 0.3em; }
+  
+  @for $i from 1 through 20 {
+    &.rounded-#{$i}{ border-radius: #{$i}px; }
+  }
+}
+
+/** padding class*/
+button{
+  padding: 0.4em 1.2em;
+
+  &.icon-only{
+    padding: 0.5em;
+  }
+}
+
+/** inner style */
+button{
+  display: inline-flex;
+  align-items: center;
+
+  .icon{ font-size: 1.5em; }
+  .icon+.label{ padding-left: 0.35em; }
+}
+

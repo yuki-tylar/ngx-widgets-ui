@@ -1,0 +1,17 @@
+<button
+[type]="type"
+[ngClass]="[darkClass, roundClass, colorClass, appearanceClass, paddingClass]"
+(click)="onClick($event)"
+>
+  <ngx-icon-lock 
+  *ngIf="icon"
+  class="icon"
+  style="line-height: 0"
+  [state]="state"
+  ></ngx-icon-lock>
+
+  <span 
+  *ngIf="label"
+  class="label" 
+  >{{label}}</span>
+</button>
