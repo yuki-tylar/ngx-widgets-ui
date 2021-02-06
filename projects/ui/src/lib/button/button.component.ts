@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter, } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 import { ColorPreset, DarkMode, State } from '../assets/types';
 
 @Component({
@@ -9,20 +9,51 @@ import { ColorPreset, DarkMode, State } from '../assets/types';
 export class ButtonComponent implements OnInit {
 
   @Input() type: 'button' | 'submit' = 'button';
-  @Input() appearance: 'flat' | 'default' = 'flat';
-  @Input() icon?: string = 'lock';
+  @Input() appearance: 'flat' | 'stripe' | 'default' = 'default';
+  @Input() icon?: string;
   @Input() label?: string;
   @Input() round?: number | string;
-  @Input() color: ColorPreset = 'default';
+  @Input() color: ColorPreset = 'green';
   @Input() darkmode: DarkMode = 'disable';
   @Input() state: State = 'off';
 
   @Output() click = new EventEmitter<PointerEvent | MouseEvent | TouchEvent>();
 
-  constructor() { }
+  private host: HTMLElement;
+  private isTouch: boolean = false;
+  constructor(_el: ElementRef) {this.host = _el.nativeElement; }
 
   get darkClass(){ return (this.darkmode == 'enable')? 'dark' : (this.darkmode=="auto")? 'dark-auto' : ''; }
   get colorClass(){ return this.color == 'default'? '' : this.color; }
+  get activeClass(){ return this.state == 'on' ? 'active' : ''; }
+
+  get bgClass(){
+    let c = '';
+    switch(this.appearance){
+      case 'flat': break;
+      default: c = 'color-bg';
+    }
+    return c;
+  }
+
+  get borderClass(){
+    let c = '';
+    switch(this.appearance){
+      case 'flat': break;
+      default: c = 'color-border active';
+    }
+    return c;
+  }
+
+  get textClass(){
+    let c = '';
+    switch(this.appearance){
+      case 'flat': break;
+      default: c = 'color-text accent'
+    }
+    return c;
+  }
+
   get appearanceClass(){
     let c = '';
     switch(this.appearance){
@@ -48,10 +79,30 @@ export class ButtonComponent implements OnInit {
     return c;
   }
 
-  ngOnChanges(e: SimpleChanges){
+  @HostListener('mousedown') Mousedown(){ this.onTouchStart(); }
+  @HostListener('touchstart') Touchstart(){ this.onTouchStart(); }
+  @HostListener('window:mouseup') WindowMousedown(){ this.onTouchEnd(); }
+  @HostListener('window:touchend') WindowTouchend(){ this.onTouchEnd(); }
+
+
+  ngOnChanges(){
 
   }
   ngOnInit(): void {
+  }
+
+  onTouchStart(){
+    const target = this.host.querySelector('button') as HTMLButtonElement;
+    target.style.transform = 'scale(0.98)';
+    this.isTouch = true;
+  }
+  
+  onTouchEnd(){
+    if(this.isTouch){
+      const target = this.host.querySelector('button') as HTMLButtonElement;
+      target.style.transform = 'scale(1)';
+      this.isTouch = false;
+    }
   }
 
   onClick(e: PointerEvent | MouseEvent | TouchEvent){
