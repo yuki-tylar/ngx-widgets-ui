@@ -9,7 +9,7 @@
     "@angular/core": "^11.0.9"
   },
   "dependencies": {
-    "@takayuki-h/ngx-icons": "0.0.2",
+    "@takayuki-h/ngx-icons": "latest",
     "tslib": "^2.0.0"
   }
 }

@@ -1,7 +1,51 @@
 <h1>NgxWidgtes - UI</h1>
 <h2>Button</h2>
-<ngx-button
-round="pill"
-(click)="onClickButton($event)"
+<div>
+  <h3>Button - default style</h3>
+  <div class="buttons">
+    <ngx-button
+    round="pill"
+    icon="lock"
+    label="please click!"
+    (click)="onClickButton($event)"
+    ></ngx-button>
+  
+    <ngx-button
+    round="pill"
+    label="please click!"
+    (click)="onClickButton($event)"
+    ></ngx-button>
+  
+    <ngx-button
+    round="pill"
+    icon="lock"
+    (click)="onClickButton($event)"
+    ></ngx-button>  
+  </div>
+</div>
 
-></ngx-button>
+<div>
+  <h3>Button - flat style</h3>
+  <div class="buttons">
+    <ngx-button
+    appearance="flat"
+    icon="lock"
+    label="please click!"
+    (click)="onClickButton($event)"
+    ></ngx-button>
+  
+    <ngx-button
+    appearance="flat"
+    label="please click!"
+    (click)="onClickButton($event)"
+    ></ngx-button>
+  
+    <ngx-button
+    appearance="flat"
+    icon="lock"
+    (click)="onClickButton($event)"
+    ></ngx-button>
+  </div>
+</div>
+
+
