@@ -1,17 +1,30 @@
-<button
-[type]="type"
-[ngClass]="[darkClass, roundClass, colorClass, appearanceClass, paddingClass]"
-(click)="onClick($event)"
+<div 
+class="button-container"
+[ngClass]="darkClass"
 >
-  <ngx-icon-lock 
-  *ngIf="icon"
-  class="icon"
-  style="line-height: 0"
-  [state]="state"
-  ></ngx-icon-lock>
-
-  <span 
-  *ngIf="label"
-  class="label" 
-  >{{label}}</span>
-</button>
+  <button
+  [type]="type"
+  class="animate"
+  [ngClass]="[roundClass, colorClass, borderClass,  paddingClass]"
+  (click)="onClick($event)"
+  >
+    <span
+    class="bg animate"
+    [ngClass]="[colorClass, activeClass, bgClass]"
+    ></span>
+  
+    <ngx-icon 
+    *ngIf="icon"
+    class="icon"
+    [ngClass]="[textClass, activeClass, colorClass]"
+    style="line-height: 0;"
+    [state]="state"
+    ></ngx-icon>
+  
+    <span 
+    *ngIf="label"
+    class="label animate" 
+    [ngClass]="[textClass, activeClass, colorClass]"
+    >{{label}}</span>
+  </button>  
+</div>
