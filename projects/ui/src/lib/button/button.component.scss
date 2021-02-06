@@ -6,12 +6,18 @@
 }
 
 button{
+  position: relative;
   appearance: none;
   background: none;
   outline: none;
   border: none;
   font-size: 1em;
   color: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  transform: scale(1);
+  transform-origin: bottom;
+
 }
 
 /** round class */
@@ -30,9 +36,7 @@ button{
 button{
   padding: 0.4em 1.2em;
 
-  &.icon-only{
-    padding: 0.5em;
-  }
+  &.icon-only{ padding: 0.5em; }
 }
 
 /** inner style */
@@ -41,6 +45,21 @@ button{
   align-items: center;
 
   .icon{ font-size: 1.5em; }
-  .icon+.label{ padding-left: 0.35em; }
+  .icon+.label{ padding-left: 0.38em; }
+
+  .icon, .label{ position: relative; }
+
+  .bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.animate{
+  transition-property: color, border-color, background-color;
+  transition-duration: 300ms;
 }
 
