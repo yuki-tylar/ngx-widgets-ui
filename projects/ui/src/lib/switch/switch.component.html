@@ -1,0 +1,13 @@
+
+<div class="switch-container" [ngClass]="[darkClass, colorClass]">
+  <button 
+  type="button" 
+  class="ngx-switch color-switch animate"
+  [ngClass]="[stateClass]"
+  (click)="onClick($event)"
+  >
+    <div class="ngx-indicator animate color-indicator"
+    [ngClass]="[stateClass, pushClass]"
+    ></div>
+  </button>
+</div>

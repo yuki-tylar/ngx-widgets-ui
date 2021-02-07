@@ -1,0 +1,145 @@
+@import "../assets/general";
+@import "../assets/color";
+
+:host{
+  display: block;
+  font-size: 24px;
+  line-height: 1em;
+  width: 1.75em;
+}
+
+.ngx-switch{
+  font-size: 1em;
+  display: block;
+  width: 100%;
+  position: relative;
+  height: 1em;
+  box-sizing: content-box;
+  border-width: 0.1em;
+  border-style: solid;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.ngx-indicator{
+  position: absolute;
+  left: 0;
+  top: 50%;
+  font-size: 1em;
+  width: 1em;
+  height: 1em;
+  background: white;
+  border-radius: 100px;
+  transition: left 200ms;
+  transform: translate(0, -50%);
+  &.pushing{ 
+    transform: scale(0.97) translate(0,-50%);
+    transform-origin: top; 
+  }
+  &.active{ left: calc(100% - 1em); }
+}
+
+.animate{
+  transition-property: border-color, background-color, left;
+  transition-duration: 200ms;
+}
+
+
+$colorSwitch: var(--ngx-switch, grey);
+$colorSwitchActive: var(--ngx-switch-accent, var(--ngx-item-accent, $blue));
+
+$colorSwitchDark: var(--ngx-switch-dark, #444444);
+$colorSwitchActiveDark: var(--ngx-switch-accent-dark, #444444);
+
+$colorIndicator: var(--ngx-switch-indicator, var(--ngx-item-on-accent, white));
+$colorIndicatorActive: var(--ngx-switch-indicator-accent, var(--ngx-item-on-accent, white));
+
+$colorIndicatorDark: var(--ngx-switch-indicator-dark, var(--ngx-item-on-accent, white));
+$colorIndicatorActiveDark: var(--ngx-switch-indicator-accent-dark, var(--ngx-item-accent-dark, $yellow));
+
+
+.color-switch{
+  background: $colorSwitch;
+  border-color: $colorSwitch;
+  &.active{
+    background: $colorSwitchActive;
+    border-color: $colorSwitchActive;
+  }
+
+  .ngx-dark &{
+    background: $colorSwitchDark;
+    border-color: $colorSwitchDark;
+    &.active{ 
+      background: $colorSwitchActiveDark;
+      border-color: $colorSwitchActiveDark
+    }
+  }
+
+  .ngx-dark-auto &{
+    background: $colorSwitchDark;
+    border-color: $colorSwitchDark;
+    &.active{ 
+      background: $colorSwitchActiveDark;
+      border-color: $colorSwitchActiveDark
+    }
+  }
+}
+
+.color-indicator{
+  background: $colorIndicator;
+  &.active{ background: $colorIndicatorActive; }
+
+  .ngx-dark &{
+    background: $colorIndicatorDark;
+    &.active{ 
+      background: $colorIndicatorActiveDark;
+    }
+  }
+
+  .ngx-dark-auto &{
+    @media (prefers-color-scheme: dark){
+      background: $colorIndicatorDark;
+      &.active{ 
+        background: $colorIndicatorActiveDark; 
+        @each $name, $value in $presetColors { &.#{$name}{ background: map-get($value, 'bg') !important; } }
+      }
+    }
+  }
+}
+
+@each $name, $value in $presetColors {
+  .#{$name}{
+    .active{
+      &.color-switch{
+        border-color: map-get($value, 'bg'); 
+        background: map-get($value, 'bg'); 
+      }
+    }
+
+    &.ngx-dark{
+      .active{
+        &.color-switch{
+          border-color: $colorSwitchActiveDark;
+          background: $colorSwitchActiveDark;
+        }
+        &.color-indicator{
+          background: map-get($value, 'bg');
+        }  
+      }
+    }
+
+    &.ngx-dark-auto{
+      @media (prefers-color-scheme: dark){
+        .active{
+          &.color-switch{
+            border-color: $colorSwitchActiveDark;
+            background: $colorSwitchActiveDark;
+          }
+          &.color-indicator{
+            background: map-get($value, 'bg');
+          }
+        }  
+      }
+    }
+  }
+}
