@@ -1,3 +1,10 @@
+.mainview{
+  display: block;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 50px;
+}
+
 .buttons{
   display: flex;
   align-items: center;

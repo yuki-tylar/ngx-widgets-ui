@@ -1,30 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 
 :root{
+  --ngx-item-primary: white;
+  --ngx-item-on-primary: inherit; 
 
-  --ngx-form-accent: #3375C3;
-  --ngx-form-accent-font: white;
-  --ngx-form-primary: white;
-   --ngx-form-primary-font: black;
-  --ngx-form-secondary: grey;
+  --ngx-item-primary-dark: black;
+  --ngx-item-on-primary-dark: inherit;
 
-  --ngx-form-accent-dark: yellow;
-  --ngx-form-accent-font-dark: black;
-  --ngx-form-primary-dark: black;
-  --ngx-form-primary-font-dark: white;  
-  --ngx-form-secondary-dark: black;
+  --ngx-item-accent: #3375C3;
+  --ngx-item-on-accent: white;
 
+  --ngx-item-accent-dark: yellow;
+  --ngx-item-on-accent-dark: black;
+
+  --ngx-switch: grey;
+  --ngx-switch-accent: #3375C3;
+  --ngx-switch-dark: #444444;
+  --ngx-switch-accent-dark: #444444;
+
+  --ngx-switch-indicator: white;
+  --ngx-switch-indicator-accent: white;
+  --ngx-switch-indicator-dark: white;
+  --ngx-switch-indicator-accent-dark: #FFF176;
 }
 
 body{
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 16px;
+  margin: 0;
+  padding: 0;
 
   color: black;
   background: white;
-  // @media (prefers-color-scheme: dark){
-  //   color: white;
-  //   background: black;
-  // }
 
+  .dark{
+    color: white;
+    background: black;
+  }
+  .dark-auto{
+    @media (prefers-color-scheme: dark){
+      color: white;
+      background: black;
+    }  
+  }
+}
+
+button:focus{
+  outline-color: #80808033;
+  outline-offset: 5px;
+  z-index: 2;
 }

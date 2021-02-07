@@ -1,51 +1,100 @@
-<h1>NgxWidgtes - UI</h1>
-<h2>Button</h2>
-<div>
-  <h3>Button - default style</h3>
-  <div class="buttons">
-    <ngx-button
-    round="pill"
-    icon="lock"
-    label="please click!"
-    (click)="onClickButton($event)"
-    ></ngx-button>
-  
-    <ngx-button
-    round="pill"
-    label="please click!"
-    (click)="onClickButton($event)"
-    ></ngx-button>
-  
-    <ngx-button
-    round="pill"
-    icon="lock"
-    (click)="onClickButton($event)"
-    ></ngx-button>  
+<div class="mainview" [ngClass]="darkClass">
+  <div>
+    DARKMODE: 
+    <button (click)="changeDarkMode('disable')">disable</button>
+    <button (click)="changeDarkMode('auto')">auto</button>
+    <button (click)="changeDarkMode('enable')">enable</button>
   </div>
-</div>
 
-<div>
-  <h3>Button - flat style</h3>
-  <div class="buttons">
-    <ngx-button
-    appearance="flat"
-    icon="lock"
-    label="please click!"
-    (click)="onClickButton($event)"
-    ></ngx-button>
-  
-    <ngx-button
-    appearance="flat"
-    label="please click!"
-    (click)="onClickButton($event)"
-    ></ngx-button>
-  
-    <ngx-button
-    appearance="flat"
-    icon="lock"
-    (click)="onClickButton($event)"
-    ></ngx-button>
+  <div>
+    COLOR:
+    <button *ngFor="let c of colors" (click)="changeColor(c)">{{c}}</button>
   </div>
+
+  
+  <h1>NgxWidgtes - UI</h1>
+  <h2>Button</h2>
+  <div>
+    <h3>Button - default style</h3>
+    <div class="buttons">
+      <ngx-button
+      appearance="pill"
+      icon="lock"
+      label="please click!"
+      [darkmode]="darkmode"
+      [color]="color"
+      (click)="onClickButton($event)"
+      ></ngx-button>
+    
+      <ngx-button
+      appearance="pill"
+      label="please click!"
+      [darkmode]="darkmode"
+      [color]="color"
+      (click)="onClickButton($event)"
+      ></ngx-button>
+    
+      <ngx-button
+      appearance="pill"
+      icon="lock"
+      [darkmode]="darkmode"
+      [color]="color"
+      (click)="onClickButton($event)"
+      ></ngx-button>
+
+      <ngx-button
+      appearance="pill"
+      icon="email"
+      [darkmode]="darkmode"
+      [color]="color"
+      (click)="onClickButton($event)"
+      ></ngx-button>  
+    </div>
+  </div>
+  
+  <div>
+    <h3>Button - flat style</h3>
+    <div class="buttons">
+      <ngx-button
+      appearance="flat"
+      icon="lock"
+      label="please click!"
+      [darkmode]="darkmode"
+      [color]="color"
+      (click)="onClickButton($event)"
+      ></ngx-button>
+    
+      <ngx-button
+      appearance="flat"
+      label="please click!"
+      [darkmode]="darkmode"
+      [color]="color"
+      (click)="onClickButton($event)"
+      ></ngx-button>
+    
+      <ngx-button
+      appearance="flat"
+      icon="lock"
+      [darkmode]="darkmode"
+      [color]="color"
+      (click)="onClickButton($event)"
+      ></ngx-button>
+
+      <ngx-button
+      appearance="flat"
+      icon="email"
+      [darkmode]="darkmode"
+      [color]="color"
+      (click)="onClickButton($event)"
+      ></ngx-button>
+    </div>
+  </div>
+  
+  <div>
+    <h3>Switch</h3>
+    <ngx-switch
+    [darkmode]="darkmode"
+    [color]="color"
+    ></ngx-switch>
+  </div>  
 </div>
-
-
