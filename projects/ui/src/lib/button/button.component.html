@@ -1,31 +1,26 @@
 <div 
 class="button-container"
-[ngClass]="darkClass"
+[ngClass]="[darkClass, colorClass, appearance]"
 >
   <button
   [type]="type"
-  class="animate"
-  [ngClass]="[roundClass, colorClass, borderClass,  paddingClass]"
+  class="animate color-button"
+  [ngClass]="[paddingClass, pushClass, stateClass]"
   (click)="onClick($event)"
   >
-    <span
-    class="bg animate"
-    [ngClass]="[colorClass, activeClass, bgClass]"
-    ></span>
-  
+ 
     <ngx-icon 
     *ngIf="icon"
     [icon]="icon"
-    class="icon"
-    [ngClass]="[textClass, activeClass, colorClass]"
-    style="line-height: 0;"
+    class="icon color-text"
+    [ngClass]="[stateClass]"
     [state]="state"
     ></ngx-icon>
   
     <span 
     *ngIf="label"
-    class="label animate" 
-    [ngClass]="[textClass, activeClass, colorClass]"
+    class="label color-text animate" 
+    [ngClass]="[stateClass]"
     >{{label}}</span>
   </button>  
 </div>

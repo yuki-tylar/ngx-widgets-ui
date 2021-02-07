@@ -1,34 +1,37 @@
+@import "../assets/_general";
 @import "../assets/color";
 
 :host{
   font-size: 14px;
   color: inherit;
+  border-color: inherit;
+}
+
+.button-container{
+  font-size: inherit;
+  border-color: inherit;
+  color: inherit;
 }
 
 button{
   position: relative;
-  appearance: none;
-  background: none;
-  outline: none;
-  border: none;
   font-size: 1em;
+  line-height: 1em;
   color: inherit;
-  cursor: pointer;
+  border-color: inherit;
   overflow: hidden;
-  transform: scale(1);
-  transform-origin: bottom;
-
+  border-width: 1px;
+  border-style: solid;
 }
 
-/** round class */
+/** border class */
 button{
-  border: solid 1px transparent;
-
-  &.rounded-pill{ border-radius: 100px; }
-  &.rounded{ border-radius: 0.3em; }
+  .flat & { border-width: 0; }
+  .pill & { border-radius: 100px; }
+  .rounded & { border-radius: 0.3em; }
   
   @for $i from 1 through 20 {
-    &.rounded-#{$i}{ border-radius: #{$i}px; }
+    .rounded-#{$i} & { border-radius: #{$i}px; }
   }
 }
 
@@ -58,8 +61,121 @@ button{
   }
 }
 
+button.pushing{ 
+  transform: scale(0.98); 
+  transform-origin: center;
+}
+
 .animate{
   transition-property: color, border-color, background-color;
   transition-duration: 300ms;
 }
 
+$colorBorderActive: var(--ngx-item-accent, $blue);
+$colorBorderActiveDark: var(--ngx-item-accent-dark, $yellow);
+
+$colorBG: var(--ngx-item-primary, transparent);
+$colorBGActive: var(--ngx-item-accent, $blue);
+
+$colorBGDark: var(--ngx-item-primary-dark, transparent);
+$colorBGActiveDark: var(--ngx-item-accent-dark, $yellow);
+
+$colorText: var(--ngx-item-accent, $blue);
+$colorTextActive: var(--ngx-item-on-accent, white);
+
+$colorTextDark: var(--ngx-item-accent-dark, $yellow);
+$colorTextActiveDark: var(--ngx-item-on-accent-dark, black);
+
+.color-button{
+  color: inherit;
+
+  &.active{ 
+    background: $colorBGActive; 
+    border-color: $colorBorderActive;
+  }
+
+  .ngx-dark & {
+    &.active{
+      border-color: $colorBorderActiveDark;
+      background: $colorBGActiveDark;
+    }
+  }
+
+  .ngx-dark-auto &{
+    &.active{
+      @media (prefers-color-scheme: dark){
+        border-color: $colorBorderActiveDark;
+        background: $colorBGActiveDark;
+      }  
+    }
+  }
+}
+
+.color-text{
+  color: inherit;
+
+  &.active{ color: $colorTextActive; }
+
+  .ngx-dark &{ 
+    &.active{ color: $colorTextActiveDark; }
+  }
+
+  .ngx-dark-auto &{
+    @media (prefers-color-scheme: dark){
+      &.active{ color: $colorTextActiveDark; }
+    }
+  }
+}
+
+.flat{
+  .color-button, .color-button.active, 
+  .dark .color-button, .dark .color-button.active{
+    background: none;
+    border-color: none;
+  }
+
+  .color-text{
+    &.active{ color: $colorBGActive; }
+  }
+  &.ngx-dark .color-text {
+    &.active{ color: $colorBGActiveDark; }
+  }
+
+  &.ngx-dark-auto .color-text{
+    @media (prefers-color-scheme: dark){
+      &.active{ color: $colorBGActiveDark; }
+    }
+  }
+}
+
+@each $name, $value in $presetColors {
+  .#{$name} {
+    .color-button{ 
+      border-color: map-get($value, 'bg');
+      &.active{
+        background: map-get($value, 'bg');
+        border-color: map-get($value, 'bg');
+      }
+    }
+
+    .color-text{
+      color: map-get($value, 'bg');
+      &.active{
+        color: map-get($value, 'text');
+      }
+    }
+
+    &.flat{
+      .color-button, .color-button.active, 
+      .dark .color-button, .dark .color-button.active{
+        background: none;
+        border-color: none;
+      }
+
+      .color-text{
+        color: inherit;
+        &.active{ color: map-get($value, 'bg'); }
+      }
+    }
+  }
+}

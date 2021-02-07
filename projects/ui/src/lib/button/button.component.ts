@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
-import { ColorPreset, DarkMode, State } from '../assets/types';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { State } from '../assets/types';
 
 @Component({
   selector: 'ngx-button',
@@ -9,101 +9,54 @@ import { ColorPreset, DarkMode, State } from '../assets/types';
 export class ButtonComponent implements OnInit {
 
   @Input() type: 'button' | 'submit' = 'button';
-  @Input() appearance: 'flat' | 'stripe' | 'default' = 'default';
+  @Input() appearance: string = 'rounded-5'; /**flat | pill | rounded-{{number}} | default | rect */
+  @Input() darkmode: string = 'disable';
+  @Input() color: string = 'default';
+  @Input() round?: number | string;
   @Input() icon?: string;
   @Input() label?: string;
-  @Input() round?: number | string;
-  @Input() color: ColorPreset = 'green';
-  @Input() darkmode: DarkMode = 'disable';
   @Input() state: State = 'off';
+  @Input() stateful: boolean = true;
 
   @Output() click = new EventEmitter<PointerEvent | MouseEvent | TouchEvent>();
 
-  private host: HTMLElement;
-  private isTouch: boolean = false;
-  constructor(_el: ElementRef) {this.host = _el.nativeElement; }
-
-  get darkClass(){ return (this.darkmode == 'enable')? 'dark' : (this.darkmode=="auto")? 'dark-auto' : ''; }
+  get darkClass(){ return (this.darkmode == 'enable')? 'ngx-dark' : (this.darkmode=="auto")? 'ngx-dark-auto' : ''; }
   get colorClass(){ return this.color == 'default'? '' : this.color; }
-  get activeClass(){ return this.state == 'on' ? 'active' : ''; }
-
-  get bgClass(){
-    let c = '';
-    switch(this.appearance){
-      case 'flat': break;
-      default: c = 'color-bg';
-    }
-    return c;
-  }
+  get pushClass(){ return (this.isTouch) ? 'pushing' : ''; }
+  get stateClass(){ return (this.state == 'on' && this.stateful) ? 'active' : ''; }
 
   get borderClass(){
-    let c = '';
+    let c = [];
     switch(this.appearance){
-      case 'flat': break;
-      default: c = 'color-border active';
+      case 'default':
+      case 'rect': break;
+      case 'pill': c.push('rounded-pill'); break;
+      case 'flat': c.push('border-none'); break;
+      default: c.push(this.appearance);
     }
-    return c;
+    return c.join(' ');
   }
 
-  get textClass(){
-    let c = '';
-    switch(this.appearance){
-      case 'flat': break;
-      default: c = 'color-text accent'
-    }
-    return c;
-  }
-
-  get appearanceClass(){
-    let c = '';
-    switch(this.appearance){
-      case 'flat': break;
-      default:
-        c = 'color-text color-bg color-border';
-        if(this.state == 'on'){ c += ' active'; }
-    }
-    return c;
-  }
   get paddingClass(){
     let c ='';
     if(this.icon && (!this.label || this.label.length == 0)){ c = 'icon-only'}
     return c;
   }
-  get roundClass(){
-    let c = '';
-    if(this.round !== undefined){
-      c = 'rounded';
-      if(typeof this.round == 'string' && this.round.match(/^(pill)$/)){ c += '-' + this.round; }
-      else if(!isNaN(Number(this.round)) && Number(this.round) > 0 ){ c += '-' + this.round.toString(); }
-    }
-    return c;
-  }
+
+
+  private isTouch: boolean = false;
+  constructor() {}
 
   @HostListener('mousedown') Mousedown(){ this.onTouchStart(); }
   @HostListener('touchstart') Touchstart(){ this.onTouchStart(); }
   @HostListener('window:mouseup') WindowMousedown(){ this.onTouchEnd(); }
   @HostListener('window:touchend') WindowTouchend(){ this.onTouchEnd(); }
 
-
-  ngOnChanges(){
-
-  }
   ngOnInit(): void {
   }
 
-  onTouchStart(){
-    const target = this.host.querySelector('button') as HTMLButtonElement;
-    target.style.transform = 'scale(0.98)';
-    this.isTouch = true;
-  }
-  
-  onTouchEnd(){
-    if(this.isTouch){
-      const target = this.host.querySelector('button') as HTMLButtonElement;
-      target.style.transform = 'scale(1)';
-      this.isTouch = false;
-    }
-  }
+  onTouchStart(){ this.isTouch = true; }
+  onTouchEnd(){ if(this.isTouch){ this.isTouch = false; } }
 
   onClick(e: PointerEvent | MouseEvent | TouchEvent){
     e.stopPropagation();
