@@ -14,7 +14,7 @@ export class AppComponent {
   public appearance = 'default';
   public appearances = ['default', 'flat', 'pill', 'rounded-10', 'rounded-5', 'rounded'];
   public stateChangeStyle = 'default';
-  public stateChangeStyles = ['default', 'invert', 'stateless'];
+  public stateChangeStyles = ['default', 'invert', 'iconOnly', 'stateless'];
 
   get darkClass(){
     let c = '';
