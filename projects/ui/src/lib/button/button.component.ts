@@ -15,7 +15,7 @@ export class ButtonComponent implements OnInit {
   @Input() icon?: string;
   @Input() label?: string;
   @Input() state: State = 'off';
-  @Input() stateChangeStyle = 'invert'; /** stateless | invert | default */
+  @Input() stateChangeStyle = 'default'; /** stateless | invert | default | iconOnly */
 
   @Output() click = new EventEmitter<PointerEvent | MouseEvent | TouchEvent>();
 
@@ -54,7 +54,7 @@ export class ButtonComponent implements OnInit {
 
   onClick(e: PointerEvent | MouseEvent | TouchEvent){
     e.stopPropagation();
-    this.state = (this.state == 'on') ? 'off' : 'on';
+    this.state = (this.state == 'on' || this.stateChangeStyle == 'stateless') ? 'off' : 'on';
     this.click.emit(e);
   }
 }
