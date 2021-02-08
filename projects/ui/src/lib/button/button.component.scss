@@ -24,14 +24,15 @@ button{
   border-style: solid;
 }
 
-/** border class */
+/** border class | bg class*/
 button{
-  .flat & { border-width: 0; }
-  .pill & { border-radius: 100px; }
-  .rounded & { border-radius: 0.3em; }
+  .appearance-flat & { background: none!important; border: none!important; }
+  .appearance-pill & { border-radius: 100px; }
+  .appearance-default &,
+  .appearance-rounded & { border-radius: 0.3em; }
   
   @for $i from 1 through 20 {
-    .rounded-#{$i} & { border-radius: #{$i}px; }
+    .appearance-rounded-#{$i} & { border-radius: #{$i}px; }
   }
 }
 
@@ -86,96 +87,197 @@ $colorTextActive: var(--ngx-item-on-accent, white);
 $colorTextDark: var(--ngx-item-accent-dark, $yellow);
 $colorTextActiveDark: var(--ngx-item-on-accent-dark, black);
 
-.color-button{
-  color: inherit;
-
-  &.active{ 
-    background: $colorBGActive; 
-    border-color: $colorBorderActive;
-  }
-
-  .ngx-dark & {
-    &.active{
-      border-color: $colorBorderActiveDark;
-      background: $colorBGActiveDark;
-    }
-  }
-
-  .ngx-dark-auto &{
-    &.active{
-      @media (prefers-color-scheme: dark){
-        border-color: $colorBorderActiveDark;
-        background: $colorBGActiveDark;
-      }  
-    }
-  }
-}
-
-.color-text{
-  color: inherit;
-
-  &.active{ color: $colorTextActive; }
-
-  .ngx-dark &{ 
-    &.active{ color: $colorTextActiveDark; }
-  }
-
-  .ngx-dark-auto &{
-    @media (prefers-color-scheme: dark){
-      &.active{ color: $colorTextActiveDark; }
-    }
-  }
-}
-
-.flat{
-  .color-button, .color-button.active, 
-  .dark .color-button, .dark .color-button.active{
-    background: none;
-    border-color: none;
-  }
-
+.state-change-default.appearance-flat{
   .color-text{
-    &.active{ color: $colorBGActive; }
-  }
-  &.ngx-dark .color-text {
-    &.active{ color: $colorBGActiveDark; }
-  }
-
-  &.ngx-dark-auto .color-text{
-    @media (prefers-color-scheme: dark){
-      &.active{ color: $colorBGActiveDark; }
+    color: inherit;
+    &.on{ 
+      color: $colorBGActive; 
+      @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); } }
     }
   }
 }
-
-@each $name, $value in $presetColors {
-  .#{$name} {
-    .color-button{ 
-      border-color: map-get($value, 'bg');
-      &.active{
-        background: map-get($value, 'bg');
-        border-color: map-get($value, 'bg');
-      }
-    }
-
-    .color-text{
-      color: map-get($value, 'bg');
-      &.active{
-        color: map-get($value, 'text');
-      }
-    }
-
-    &.flat{
-      .color-button, .color-button.active, 
-      .dark .color-button, .dark .color-button.active{
-        background: none;
-        border-color: none;
-      }
-
-      .color-text{
-        color: inherit;
-        &.active{ color: map-get($value, 'bg'); }
-      }
+.state-change-default.appearance-flat.ngx-dark{
+  .color-text{
+    &.on{ 
+      color: $colorBGActiveDark; 
+      @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); } }
     }
   }
 }
+.state-change-default.appearance-flat.ngx-dark-auto{ @media (prefers-color-scheme: dark){
+  .color-text{
+    &.on{ 
+      color: $colorBGActiveDark; 
+      @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); } }
+    }
+  }
+}}
+.state-change-invert.appearance-flat{
+  .color-text{
+    color: $colorBGActive;
+    @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); } }
+  }
+}
+.state-change-invert.appearance-flat.ngx-dark{
+  .color-text{
+    color: $colorBGActiveDark;
+    @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); } }
+  }
+}
+.state-change-invert.appearance-flat.ngx-dark-auto{ @media (prefers-color-scheme: dark){
+  .color-text{
+    color: $colorBGActiveDark;
+    @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); } }
+  }
+}}
+
+
+.state-change-default:not(.appearance-flat){
+  .color-button{
+      background: none; 
+      border-color: inherit;
+    &.on{ 
+      background: $colorBGActive; 
+      border-color: $colorBorderActive;
+      @each $name, $value in $presetColors { 
+        &.#{$name} { 
+          background: map-get($value, 'bg'); 
+          border-color: map-get($value, 'bg'); 
+        } 
+      }
+    }
+  }
+  .color-text{
+    color: inherit;
+    &.on{ 
+      color: $colorTextActive;
+      @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'text'); }}
+    }
+  }
+}
+.state-change-default:not(.appearance-flat).ngx-dark{
+  .color-button{
+    background: none; 
+    border-color: inherit;
+    &.on{ 
+      background: $colorBGActiveDark; 
+      border-color: $colorBorderActiveDark;
+      @each $name, $value in $presetColors { 
+        &.#{$name} { 
+          background: map-get($value, 'bg'); 
+          border-color: map-get($value, 'bg'); 
+        } 
+      }
+    }
+  }
+  .color-text{
+    color: inherit;
+    &.on{ 
+      color: $colorTextActiveDark; 
+      @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'text'); }}
+    }
+  }
+}
+.state-change-default:not(.appearance-flat).ngx-dark-auto{ @media (prefers-color-scheme: dark){
+  .color-button{
+    background: 
+    none; border-color: inherit;
+    &.on{ 
+      background: $colorBGActiveDark; 
+      border-color: $colorBorderActiveDark; 
+      @each $name, $value in $presetColors { 
+        &.#{$name} { 
+          background: map-get($value, 'bg'); 
+          border-color: map-get($value, 'bg'); 
+        } 
+      }
+    }
+  }
+  .color-text{
+    color: inherit;
+    &.on{ 
+      color: $colorTextActiveDark; 
+      @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'text'); }}
+    }
+  }
+}}
+
+.state-change-invert:not(.appearance-flat){
+  .color-button{
+    background: $colorBG;       
+    border-color: $colorBGActive;
+    @each $name, $value in $presetColors { &.#{$name} { border-color: map-get($value, 'bg'); }}
+    &.on{ 
+      background: $colorBGActive; 
+      border-color: $colorBGActive; 
+      @each $name, $value in $presetColors { 
+        &.#{$name} { 
+          border-color: map-get($value, 'bg'); 
+          background: map-get($value, 'bg'); 
+        }
+      }
+    }
+  }
+  .color-text{
+    color: $colorBGActive;
+    @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); }}
+    &.on{ 
+      color: $colorTextActive;
+      @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'text'); }}
+    }
+  }
+}
+.state-change-invert:not(.appearance-flat).ngx-dark{
+  .color-button{
+    background: $colorBGDark;       
+    border-color: $colorBGActiveDark;
+    @each $name, $value in $presetColors {  &.#{$name} { border-color: map-get($value, 'bg'); }}
+
+    &.on{ 
+      background: $colorBGActiveDark; 
+      border-color: $colorBGActiveDark; 
+      @each $name, $value in $presetColors {  
+        &.#{$name} { 
+          border-color: map-get($value, 'bg');
+          background: map-get($value, 'bg');
+        }
+      }
+    }
+  }
+  .color-text{
+    color: $colorBGActiveDark;
+    @each $name, $value in $presetColors {  &.#{$name} { color: map-get($value, 'bg'); }}
+
+    &.on{ 
+      color: $colorTextActiveDark; 
+      @each $name, $value in $presetColors {  &.#{$name} { color: map-get($value, 'text'); }}
+    }
+  }
+}
+.state-change-invert:not(.appearance-flat).ngx-dark-auto{ @media (prefers-color-scheme: dark){
+  .color-button{
+    background: $colorBGDark;       
+    border-color: $colorBGActiveDark;
+    @each $name, $value in $presetColors {  &.#{$name} { border-color: map-get($value, 'bg'); }}
+
+    &.on{ 
+      background: $colorBGActiveDark; 
+      border-color: $colorBGActiveDark; 
+      @each $name, $value in $presetColors {  
+        &.#{$name} { 
+          border-color: map-get($value, 'bg');
+          background: map-get($value, 'bg');
+        }
+      }
+    }
+  }
+  .color-text{
+    color: $colorBGActiveDark;
+    @each $name, $value in $presetColors {  &.#{$name} { color: map-get($value, 'bg'); }}
+
+    &.on{ 
+      color: $colorTextActiveDark; 
+      @each $name, $value in $presetColors {  &.#{$name} { color: map-get($value, 'text'); }}
+    }
+  }
+}}

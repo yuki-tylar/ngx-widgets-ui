@@ -9,33 +9,26 @@ import { State } from '../assets/types';
 export class ButtonComponent implements OnInit {
 
   @Input() type: 'button' | 'submit' = 'button';
-  @Input() appearance: string = 'rounded-5'; /**flat | pill | rounded-{{number}} | default | rect */
+  @Input() appearance: string = 'default'; /**flat | pill | rounded-{{number}} | default | rect */
   @Input() darkmode: string = 'disable';
   @Input() color: string = 'default';
-  @Input() round?: number | string;
   @Input() icon?: string;
   @Input() label?: string;
   @Input() state: State = 'off';
-  @Input() stateful: boolean = true;
+  @Input() stateChangeStyle = 'invert'; /** stateless | invert | default */
 
   @Output() click = new EventEmitter<PointerEvent | MouseEvent | TouchEvent>();
 
-  get darkClass(){ return (this.darkmode == 'enable')? 'ngx-dark' : (this.darkmode=="auto")? 'ngx-dark-auto' : ''; }
-  get colorClass(){ return this.color == 'default'? '' : this.color; }
-  get pushClass(){ return (this.isTouch) ? 'pushing' : ''; }
-  get stateClass(){ return (this.state == 'on' && this.stateful) ? 'active' : ''; }
-
-  get borderClass(){
-    let c = [];
-    switch(this.appearance){
-      case 'default':
-      case 'rect': break;
-      case 'pill': c.push('rounded-pill'); break;
-      case 'flat': c.push('border-none'); break;
-      default: c.push(this.appearance);
-    }
+  get containerClass(){
+    const c = [];
+    if(this.darkmode == 'enable'){ c.push('ngx-dark'); }else if(this.darkmode == 'auto'){ c.push('ngx-dark-auto'); }
+    if(this.stateChangeStyle !== 'stateless'){ c.push('state-change-' + this.stateChangeStyle); }
+    c.push('appearance-' + this.appearance);
     return c.join(' ');
   }
+
+  get pushClass(){  return (this.isTouch) ? 'pushing' : ''; }
+  get stateClass(){ return (this.state == 'on' && this.stateChangeStyle !== 'stateless') ? 'on' : 'off'; }
 
   get paddingClass(){
     let c ='';
@@ -43,6 +36,7 @@ export class ButtonComponent implements OnInit {
     return c;
   }
 
+  get colorClass(){ return this.color !== 'default' ? this.color : ''; }
 
   private isTouch: boolean = false;
   constructor() {}

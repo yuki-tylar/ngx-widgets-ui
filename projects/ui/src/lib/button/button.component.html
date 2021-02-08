@@ -1,11 +1,11 @@
 <div 
 class="button-container"
-[ngClass]="[darkClass, colorClass, appearance]"
+[ngClass]="[containerClass]"
 >
   <button
   [type]="type"
   class="animate color-button"
-  [ngClass]="[paddingClass, pushClass, stateClass]"
+  [ngClass]="[paddingClass, pushClass, stateClass, colorClass]"
   (click)="onClick($event)"
   >
  
@@ -13,14 +13,14 @@ class="button-container"
     *ngIf="icon"
     [icon]="icon"
     class="icon color-text"
-    [ngClass]="[stateClass]"
-    [state]="state"
+    [ngClass]="[stateClass, colorClass]"
+    [state]="stateClass"
     ></ngx-icon>
   
     <span 
     *ngIf="label"
     class="label color-text animate" 
-    [ngClass]="[stateClass]"
+    [ngClass]="[stateClass, colorClass]"
     >{{label}}</span>
   </button>  
 </div>
