@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, SimpleChanges } from '@angular/core';
 import { State } from '../assets/types';
 
 @Component({
@@ -8,7 +8,7 @@ import { State } from '../assets/types';
 })
 export class ButtonComponent implements OnInit {
 
-  @Input() type: 'button' | 'submit' = 'button';
+  @Input() type: 'button' | 'submit' | 'link' = 'button';
   @Input() appearance: string = 'default'; /**flat | pill | rounded-{{number}} | default | rect */
   @Input() darkmode: string = 'disable';
   @Input() color: string = 'default';
@@ -16,6 +16,9 @@ export class ButtonComponent implements OnInit {
   @Input() label?: string;
   @Input() state: State = 'off';
   @Input() stateChangeStyle = 'default'; /** stateless | invert | default | iconOnly */
+
+  @Input() url?: string
+  @Input() target?: string = '_blank';
 
   @Output() click = new EventEmitter<PointerEvent | MouseEvent | TouchEvent>();
 
@@ -46,7 +49,14 @@ export class ButtonComponent implements OnInit {
   @HostListener('window:mouseup') WindowMousedown(){ this.onTouchEnd(); }
   @HostListener('window:touchend') WindowTouchend(){ this.onTouchEnd(); }
 
+  ngOnChanges(e: SimpleChanges) {
+    if(e.type && e.type.currentValue !== e.type.previousValue && this.type === 'link' && !this.url){
+      this.type = 'button';
+    }
+  }
+
   ngOnInit(): void {
+    if(this.type === 'link' && !this.url){ this.type = 'button'; }
   }
 
   onTouchStart(){ this.isTouch = true; }

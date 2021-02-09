@@ -13,7 +13,8 @@
   color: inherit;
 }
 
-button{
+button,
+a{
   position: relative;
   font-size: 1em;
   line-height: 1em;
@@ -25,7 +26,8 @@ button{
 }
 
 /** border class | bg class*/
-button{
+button,
+a{
   .appearance-flat & { background: none!important; border: none!important; }
   .appearance-pill & { border-radius: 100px; }
   .appearance-default &,
@@ -37,14 +39,16 @@ button{
 }
 
 /** padding class*/
-button{
+button,
+a{
   padding: 0.4em 1.2em;
 
   &.icon-only{ padding: 0.5em; }
 }
 
 /** inner style */
-button{
+button,
+a{
   display: inline-flex;
   align-items: center;
 
@@ -62,7 +66,8 @@ button{
   }
 }
 
-button.pushing{ 
+button.pushing,
+a.pushing{ 
   transform: scale(0.98); 
   transform-origin: center;
 }

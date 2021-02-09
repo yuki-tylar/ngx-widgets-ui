@@ -1,4 +1,5 @@
-<div 
+<div
+*ngIf="type !== 'link'"
 class="button-container"
 [ngClass]="[containerClass]"
 >
@@ -22,5 +23,32 @@ class="button-container"
     class="label color-text animate" 
     [ngClass]="[stateClass, colorClass]"
     >{{label}}</span>
-  </button>  
+  </button>
+</div>
+
+<div
+*ngIf="type === 'link' && url"
+class="button-container"
+[ngClass]="[containerClass]"
+>
+  <a 
+  [href]="url" 
+  [target]="target"
+  class="animate color-button"
+  [ngClass]="[paddingClass, pushClass, stateClass, colorClass]"
+  >
+    <ngx-icon 
+    *ngIf="icon"
+    [icon]="icon"
+    class="icon color-text"
+    [ngClass]="[stateClass, colorClass]"
+    [state]="stateClass"
+    ></ngx-icon>
+
+    <span 
+    *ngIf="label"
+    class="label color-text animate" 
+    [ngClass]="[stateClass, colorClass]"
+    >{{label}}</span>
+  </a>
 </div>
