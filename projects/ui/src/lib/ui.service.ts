@@ -7,3 +7,8 @@ export class UiService {
 
   constructor() { }
 }
+
+export interface UiItemComponent{
+  color: string;
+  darkmode: string;
+}

@@ -1,17 +1,19 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, SimpleChanges } from '@angular/core';
 import { State } from '../assets/types';
+import { UiItemComponent } from '../ui.service';
 
 @Component({
   selector: 'ngx-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent implements OnInit, UiItemComponent{
+
+  @Input() darkmode: string = 'disable';
+  @Input() color: string = 'default';
 
   @Input() type: 'button' | 'submit' | 'link' = 'button';
   @Input() appearance: string = 'default'; /**flat | pill | rounded-{{number}} | default | rect */
-  @Input() darkmode: string = 'disable';
-  @Input() color: string = 'default';
   @Input() icon?: string;
   @Input() label?: string;
   @Input() state: State = 'off';

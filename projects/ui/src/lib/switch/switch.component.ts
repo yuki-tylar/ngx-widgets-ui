@@ -1,16 +1,17 @@
-import { Component, OnInit, ElementRef, Input, Output, EventEmitter, HostListener } from '@angular/core';
-import { AnimationBuilder, AnimationMetadata, AnimationPlayer, style, keyframes, animate, query, group } from '@angular/animations';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { UiItemComponent } from '../ui.service';
 
 @Component({
   selector: 'ngx-switch',
   templateUrl: './switch.component.html',
   styleUrls: ['./switch.component.scss']
 })
-export class SwitchComponent implements OnInit {
+export class SwitchComponent implements OnInit, UiItemComponent {
 
-  @Input() state: string = 'off';
   @Input() darkmode: string = 'disable';
   @Input() color: string = 'orange'
+
+  @Input() state: string = 'off';
 
   @Output() click = new EventEmitter<PointerEvent | MouseEvent | TouchEvent>();
 

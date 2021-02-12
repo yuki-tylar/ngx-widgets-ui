@@ -1,0 +1,125 @@
+@import '../assets/color';
+@import '../assets/general';
+
+:host{
+  font-size: 30px;
+  line-height: 1em;
+  height: 1em;
+}
+
+.ngx-slider-container{
+  position: relative;
+  height: calc(1em + 28px);
+}
+
+.ngx-slider{
+  position: absolute;
+  top: 50%;
+  width: 1em;
+  height: 1em;
+  font-size: 1em;
+  transform: translate(-50%, -50%);
+  border-radius: 100000px;
+  background: black;
+  cursor: grab;
+  &.animate-left{ transition: left 150ms; }
+}
+
+$hRoad: 0.4em;
+.ngx-slider-road{
+  position: absolute;
+  top: 0.5em;
+  width: 100%;
+  box-sizing: border-box;
+  height: $hRoad;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 100px;
+  transform: translateY(-50%);
+}
+
+.ngx-slider-rail{
+  position: absolute;
+  height: 100%;
+  width: calc(100% - 0.8em);
+  top: 0;
+  left: 0.4em;
+}
+
+.ngx-stepper-item{
+  position: absolute;
+  top: #{$hRoad / 2};
+  width: 0;
+  height: 0.5em;
+}
+
+.ngx-stepper-label{
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  font-size: 12px;
+  line-height: 1em;
+  transform: translate(-50%, 0);
+  // background: var(--ngx-item-secondary, grey);
+  padding: 3px 15px;
+  border-radius: 10px;
+  user-select: none;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.grabbing{ cursor: grabbing!important; }
+
+
+$colorActive: var(--ngx-item-accent, $blue);
+$colorActiveDark: var(--ngx-item-accent-dark, $yellow);
+$colorSecondary: var(--ngx--item-secondary, grey);
+$colorSecondaryDark: var(--ngx--item-secondary-dark, grey);
+
+.color-button{
+  background: $colorActive;
+  @each $name, $value in $presetColors { &.#{$name} { background: map-get($value, 'bg'); } }
+}
+
+.color-label{
+  color: $colorActive;
+  @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); } }
+}
+
+.color-road{
+  border-color: $colorSecondary;
+}
+
+.ngx-dark{
+  .color-button{
+    background: $colorActiveDark;
+    @each $name, $value in $presetColors { &.#{$name} { background: map-get($value, 'bg'); } }
+  }
+  
+  .color-label{
+    color: $colorActiveDark;
+    @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); } }
+  }
+  
+  .color-road{
+    border-color: $colorSecondaryDark;
+  }
+}
+
+.ngx-dark-auto{
+  @media (prefers-color-scheme: dark){
+    .color-button{
+      background: $colorActiveDark;
+      @each $name, $value in $presetColors { &.#{$name} { background: map-get($value, 'bg'); } }
+    }
+    
+    .color-label{
+      color: $colorActiveDark;
+      @each $name, $value in $presetColors { &.#{$name} { color: map-get($value, 'bg'); } }
+    }
+    
+    .color-road{
+      border-color: $colorSecondaryDark;
+    }
+  }
+}

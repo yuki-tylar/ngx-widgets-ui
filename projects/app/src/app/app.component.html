@@ -71,5 +71,14 @@
     [darkmode]="darkmode"
     [color]="color"
     ></ngx-switch>
-  </div>  
+  </div> 
+
+  <div style="width: 300px">
+    <h3>Slider</h3>
+    <ngx-slider 
+    [color]="color"
+    [darkmode]="darkmode"
+    (change)="onSliderChange($event)"
+    ></ngx-slider>
+  </div>
 </div>

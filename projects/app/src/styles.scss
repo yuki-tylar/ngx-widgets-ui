@@ -13,6 +13,9 @@
   --ngx-item-accent-dark: yellow;
   --ngx-item-on-accent-dark: black;
 
+  --ngx-form-secondary: grey;
+  --ngx-form-secondary-dark: grey;
+
   --ngx-switch: grey;
   --ngx-switch-accent: #3375C3;
   --ngx-switch-dark: #444444;
@@ -45,8 +48,10 @@ body{
   }
 }
 
-button:focus{
+button:focus, button.focus{
   outline-color: #80808033;
   outline-offset: 5px;
+  outline-style: auto;
+  outline-width: 1px;
   z-index: 2;
 }

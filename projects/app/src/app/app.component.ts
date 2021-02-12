@@ -29,6 +29,10 @@ export class AppComponent {
   onClickButton(e:any){
   }
 
+  onSliderChange(e: any){
+    console.log(e);
+  }
+
   changeDarkMode(state: string){ this.darkmode = state; }
   changeColor(color: string){ this.color = color; }
   changeAppearance(appearance: string){ this.appearance = appearance; }

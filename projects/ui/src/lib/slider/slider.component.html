@@ -1,0 +1,48 @@
+<div class="ngx-slider-container"
+[ngClass]="[grabbingClass, darkClass]"
+(clickOutside)="clearTarget()"
+>
+  <div class="ngx-slider-road color-road">
+    <div class="ngx-slider-rail"
+    (click)="onClickRail($event)"
+    >
+      <div 
+      *ngFor="let item of stepper;"
+      class="ngx-stepper-item"
+      [ngStyle]="{left: item.coord + '%'}"
+      >
+        <div 
+        *ngIf="target && target.index == item.index"
+        class="ngx-stepper-label color-label"
+        [ngClass]="[colorClass]"
+        [@fade]
+        >
+          <span style="position: relative;">{{item.label}}</span>
+        </div>
+      </div>
+  
+      <button class="ngx-slider color-button"
+      [ngClass]="[colorClass, buttonClass, ((targetIdxButton == 0)? 'focus' : '')]"
+      [style.left]="coords[0] + '%'"
+
+      ngxDraggable
+      direction="horizontal"  
+      (dragstart)="onDragStart(0)"
+      (drag)="onDrag(0, $event)"
+      (dragend)="onDragEnd(0, $event)"
+      ></button>
+
+      <button class="ngx-slider color-button"
+      *ngIf="isMultiple"
+      [ngClass]="[colorClass, buttonClass, ((targetIdxButton == 1)? 'focus' : '')]"
+      [style.left]="coords[1] + '%'"
+
+      ngxDraggable
+      direction="horizontal"
+      (dragstart)="onDragStart(1)"
+      (drag)="onDrag(1, $event)"
+      (dragend)="onDragEnd(1, $event)"
+      ></button>
+    </div>
+  </div>
+</div>
