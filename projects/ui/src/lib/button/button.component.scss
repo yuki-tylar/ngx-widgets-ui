@@ -42,8 +42,23 @@ a{
 button,
 a{
   padding: 0.4em 1.2em;
+  &.p-s, &.p-small{ padding: 0.3em 1.0em; }
+  &.p-xs, &.p-sxmall{ padding: 0.2em 0.8em; }
 
-  &.icon-only{ padding: 0.5em; }
+  &.icon-only{ 
+    padding: 0.5em; 
+
+    &.p-s{ padding: 0.3em; }
+    &.p-xs{ padding: 0.1.5em; }
+    &.p-s, &.p-small{ padding: 0.3em; }
+    &.p-xs, &.p-sxmall{ padding: 0.15em; }
+    }
+
+  &.p-none{ padding: 0!important; }
+  &.p-none-left,   &.p-none-x{ padding-left: 0!important; }
+  &.p-none-right,  &.p-none-x{ padding-right: 0!important; }
+  &.p-none-top,    &.p-none-y{ padding-top: 0!important; }
+  &.p-none-bottom, &.p-none-y{ padding-bottom: 0!important;}
 }
 
 /** inner style */

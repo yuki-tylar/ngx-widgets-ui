@@ -14,6 +14,7 @@ export class ButtonComponent implements OnInit, UiItemComponent{
 
   @Input() type: 'button' | 'submit' | 'link' = 'button';
   @Input() appearance: string = 'default'; /**flat | pill | rounded-{{number}} | default | rect */
+  @Input() padding?: string | string[]; /** s | xs | none | none-x | none-y | none-top | none-left | none-right | none-bottom */
   @Input() icon?: string;
   @Input() label?: string;
   @Input() state: State = 'off';
@@ -36,9 +37,17 @@ export class ButtonComponent implements OnInit, UiItemComponent{
   get stateClass(){ return (this.state == 'on' && this.stateChangeStyle !== 'stateless') ? 'on' : 'off'; }
 
   get paddingClass(){
-    let c ='';
-    if(this.icon && (!this.label || this.label.length == 0)){ c = 'icon-only'}
-    return c;
+    let c =[];
+    if(this.icon && (!this.label || this.label.length == 0)){ c.push('icon-only'); }
+
+    if(this.padding){
+      let p: string[];
+      if(typeof this.padding == 'string'){ p = this.padding.split(','); }
+      else{ p = this.padding; }
+      p.forEach(s=>{ c.push('p-' + s.trim()); });
+    }
+  
+    return c.join(' ');
   }
 
   get colorClass(){ return this.color !== 'default' ? this.color : ''; }
